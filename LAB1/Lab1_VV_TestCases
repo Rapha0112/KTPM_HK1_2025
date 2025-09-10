@@ -1,0 +1,83 @@
+TRẦN VĂN MINH TIẾN
+3122411209
+LAB 1
+
+I. VERIFICATION AND VALIDATION 
+System 1 problems:
+- “ 2a ” không rõ ràng, cần sửa lại là “ 2 * a “
+- Nghiệm “ x2 = -b - sqrt(DELTA/2a) “  → sai, vì sqrt áp dụng sai chỗ và thiếu ngoặc. 
+- Sửa lại thành “ x2 = ( -b - sqrt(DELTA) ) / (2*a) ”
+- Chưa xử lý a == 0, DELTA < 0 
+System 2 problems:
+- Công thức DELTA đúng: DELTA = b*b - 4*a*c.
+- Chưa xử lý a == 0, DELTA < 0
+
+II. TEST-CASES
+a) 
+Đúng
+Test-cases:
+- x = 11 → 22
+- x = 10 → -10
+- x = -5 → 5
+
+b) 
+Bug: Với số âm, code trả về 2*x (âm) thay vì -x (dương).
+Test-cases:
+- x = 11 → 22 (đúng)
+- x = 10 → -10 (đúng)
+- x = 0 → 0 (đúng)
+- x = -5 → -10 → lỗi (phải ra 5)
+
+c) 
+Bug: Nhánh else if (x < 2) không bao giờ chạy.
+Kết quả: Hàm luôn trả 2*x.
+Test-cases:
+- x = 1 → trả 2
+- x = 2 → trả 4
+- x = 10 → trả 20
+
+d) 
+Bug: Cả hai nhánh đều trả 2*x.
+Test-cases:
+- x = 1 → log hợp lệ → 2
+- x = 0 → log(0) → lỗi toán học
+- x = -1 → hợp lệ → 2 * -1 = -2
+- x = 2 → cos(2) âm → log < 0 → lỗi miền
+
+e) 
+Bug:
+- max khởi tạo = 0 → nếu tất cả số âm thì sai.
+- Dùng > thay vì >= → nếu số lớn bằng nhau thì trả sai.
+Test-cases:
+- (3,2,1) → 3
+- (-3,-2,-1) → mong -1, code trả 0 (sai)
+- (5,5,2) → mong 5, code trả 0 (sai)
+- (4,7,7) → mong 7, code trả 0 (sai)
+- (0,0,0) → 0 (đúng nhưng không phân biệt bằng nhau)
+
+III. PRACTICE 1
+
+Phương trình: a*x^4 + b*x^2 + c = 0
+•	Input: 3 số thực a, b, c.
+•	Output: số nghiệm thực và giá trị các nghiệm.
+Các trường hợp có thể xảy ra:
+•	a = b = c = 0 → Vô số nghiệm (-1).
+•	a = b = 0, c ≠ 0 → Vô nghiệm (0).
+•	a = 0, b ≠ 0 → Phương trình trở thành bậc hai theo x^2: b*y + c = 0.
+o	Nếu y = -c/b < 0 → vô nghiệm.
+o	Nếu y ≥ 0 → nghiệm x = +-sqrt(y).
+•	a ≠ 0: giải phương trình bậc hai a*y^2 + b*y + c = 0 với ẩn y = x^2.
+o	Nếu delta < 0 → vô nghiệm.
+o	Nếu delta >= 0 → tìm y1, y2.
+	Nếu y < 0 → bỏ.
+	Nếu y >= 0 → nghiệm x = +-sqrt(y).
+
+Test-cases:
+1. (0,0,0) → vô số nghiệm
+2. (0,0,5) → vô nghiệm
+3. (0,2,-8) → nghiệm 2, -2
+4. (1,0,1) → vô nghiệm
+5. (1,0,-1) → nghiệm 1, -1
+6. (1,-5,4) → nghiệm 2, -2, 1, -1
+7. (1,2,1) → vô nghiệm
+8. (-1,1,0) → nghiệm 0, 1, -1
